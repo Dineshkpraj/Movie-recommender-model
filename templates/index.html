@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommender</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { color: #333; }
+        input, button { padding: 10px; font-size: 16px; }
+        input { width: 70%; border: 1px solid #ddd; border-radius: 5px; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎬 Movie Recommender</h2>
+    <form action="/recommend" method="POST">
+        <input type="text" name="movie_title" placeholder="Enter a movie title (e.g., Interstellar)" required>
+        <button type="submit">Recommend</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if results %}
+        <h3>Recommendations for: <i>{{ selected_movie }}</i></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Movie Title</th>
+                    <th>Average Rating</th>
+                    <th>Score (WR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for movie in results %}
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.vote_average }}</td>
+                    <td>{{ movie.wr|round(2) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+</body>
+</html>
