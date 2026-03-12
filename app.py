@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import pickle
 import pandas as pd
 import numpy as np
+import os
 
 app = Flask(__name__)
 
@@ -65,4 +66,5 @@ def recommend():
     return render_template('index.html', results=results, selected_movie=movie_title)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
